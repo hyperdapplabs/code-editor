@@ -16,8 +16,5 @@
     "jsx": "react",
     "jsxFactory": "m"
   },
-  "include": [
-    "src",
-    "decs.d.ts"
-  ]
+  "include": ["src"]
 }

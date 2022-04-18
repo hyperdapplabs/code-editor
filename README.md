@@ -1,7 +1,6 @@
-# HyperDapp front-end
+# HyperDapp Code Editor
 
-Goals:
-
+## Goals
 - Code REPL
 - Publish button
 - Permalink to generated dApp
@@ -13,7 +12,17 @@ Goals:
 $ cp .env.example .env
 
 # Fill out the fields in .env
+```
 
-$ npm install
+### NPM
+```
+$ npm i
 $ npm run dev
+```
+
+
+### YARN
+```
+$ yarn
+$ yarn dev
 ```
