@@ -4,7 +4,7 @@ import { Editor, makeCodeEditor } from "../lib/code-editor";
 import { UploadModal } from "./ipfs-upload-modal";
 import "./cortex-editor.css";
 
-import { plainText as CORTEX_EXAMPLE } from "../../example-flows/weth.pl";
+import { plainText as CORTEX_EXAMPLE } from "../../example-flows/mint.pl";
 import { btnClass } from "../lib/component-classes";
 
 type Attrs = {
@@ -15,7 +15,7 @@ type Attrs = {
 export const CortexEditor = cc<Attrs>(function ($attrs) {
   let editor: Editor;
   let showIpfs: boolean = false;
-  let cid = m.route.param('cid');
+  let cid = m.route.param("cid");
 
   this.oncreate(({ dom }) => {
     editor = makeCodeEditor(dom.querySelector(".code-editor-container")!);
@@ -33,14 +33,14 @@ export const CortexEditor = cc<Attrs>(function ($attrs) {
               showIpfs = false;
             },
           })}
-        {!cid &&
+        {!cid && (
           <button
             onclick={() => (showIpfs = true)}
             class={`publish-button ${btnClass()}`}
           >
             Publish
           </button>
-        }
+        )}
         <div class="flex-1 flex flex-col code-editor-container"></div>
       </div>
     );

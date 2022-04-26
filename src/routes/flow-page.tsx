@@ -6,7 +6,7 @@ import { FlowUI } from "../components/flow-ui";
 
 export const FlowPage = cc(function () {
   let flow: Flow | null;
-  let cid = m.route.param('cid');
+  let cid = m.route.param("cid");
   let noSuchFlow = false;
 
   const wallet = makeWalletConnector();
@@ -20,17 +20,16 @@ export const FlowPage = cc(function () {
     try {
       const req = await fetch(`https://ipfs.io/ipfs/${cid}`);
       if (req.status !== 200) {
-        throw new Error('bad_request');
+        throw new Error("bad_request");
       }
 
-      const json = await req.json()
-      if (typeof json.logic !== 'string') {
-        throw new Error('bad_request');
+      const json = await req.json();
+      if (typeof json.logic !== "string") {
+        throw new Error("bad_request");
       }
 
       flow = await makeFlow(json.logic);
-    }
-    catch(err) {
+    } catch (err) {
       noSuchFlow = true;
     }
 
@@ -41,27 +40,28 @@ export const FlowPage = cc(function () {
     return (
       <div class="container mx-auto p-10 h-screen">
         <div class="flex flex-row-reverse mb-10">
-          <a href={`http://localhost:3000/source/${cid}`} target="_blank">Show Source</a>
+          <a href={`http://localhost:3000/source/${cid}`} target="_blank">
+            Show Source
+          </a>
         </div>
         <div class="flex flex-col items-center">
           {[
             // In an array to enable key
             !noSuchFlow &&
-            m(FlowUI, {
-              key: flow?.id || -1,
-              flow,
-              wallet,
-              className: "w-[50%] rounded-xl",
-            }),
+              m(FlowUI, {
+                key: flow?.id || -1,
+                flow,
+                wallet,
+                className: "w-[50%] rounded-xl",
+              }),
           ]}
-          {noSuchFlow &&
+          {noSuchFlow && (
             <div class="dark:text-red-300">
               {cid
                 ? `No such flow for given CID (${cid})`
-                : 'No given flow CID.'
-              }
+                : "No given flow CID."}
             </div>
-          }
+          )}
           <p class="text-black font-bold italic mt-2">Powered by HyperDapp</p>
         </div>
       </div>

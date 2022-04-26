@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 a {
-  @apply underline text-blue-600 hover:text-blue-800 visited:text-purple-600 truncate
+  @apply underline text-blue-600 hover:text-blue-800 visited:text-purple-600 truncate;
 }
 
 /**
@@ -93,7 +93,8 @@ a {
   animation-delay: -1.6s;
 }
 @keyframes loader {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {

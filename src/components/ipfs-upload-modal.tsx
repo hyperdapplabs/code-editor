@@ -198,8 +198,12 @@ export const UploadModal = cc<Attrs>(function ($attrs) {
               Upload successful
             </h3>
             <div class="flex flex-col gap-2">
-              <p class="text-sm text-gray-500">Start using your dApp using the link below:</p>
-              <a href={`http://localhost:3000/flow/${cid}`} target="_blank">http://localhost:3000/flow/{cid}</a>
+              <p class="text-sm text-gray-500">
+                Start using your dApp using the link below:
+              </p>
+              <a href={`http://localhost:3000/flow/${cid}`} target="_blank">
+                http://localhost:3000/flow/{cid}
+              </a>
             </div>
           </div>
         </div>

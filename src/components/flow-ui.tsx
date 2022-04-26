@@ -76,11 +76,9 @@ export const FlowUI = cc<Attrs>(function ($attrs) {
             </div>
           ))}
         </div>
-        {promptHistory.running &&
-          <div class="px-4 flex items-center justify-center">
-            {m(Loader)}
-          </div>
-        }
+        {promptHistory.running && (
+          <div class="px-4 flex items-center justify-center">{m(Loader)}</div>
+        )}
       </div>
     );
   };
@@ -144,8 +142,9 @@ function renderPrompts(params: {
         </div>
       );
     } else if (type === "image") {
-      const img = (args[0] as string).replaceAll("'", "");
-      return <img src={img} alt="img" />
+      let img = (args[0] as string).replaceAll("'", "");
+      img = img.replace("ipfs://", "https://ipfs.io/ipfs/");
+      return <img src={img} width="150px" alt="img" />;
     } else if (type === "button") {
       const [buttonText, attrs, callback] = args as [
         string,
@@ -157,7 +156,9 @@ function renderPrompts(params: {
         <button
           class={`${btnClass()} ${className}`}
           onclick={() => params.executeButtonAction(callback as any)}
-          disabled={!params.isLatest || params.running || attrs.enabled === false}
+          disabled={
+            !params.isLatest || params.running || attrs.enabled === false
+          }
         >
           {unescapeString(buttonText)}
         </button>
@@ -171,10 +172,10 @@ function renderPrompts(params: {
           value = Number(e.target.value) * 10 ** 18;
         }
         params.onInput(name, value);
-      }
-      const disabled = !params.isLatest || params.running
+      };
+      const disabled = !params.isLatest || params.running;
 
-      if (inputType === 'address') {
+      if (inputType === "address") {
         return (
           <input
             type="text"
@@ -183,7 +184,7 @@ function renderPrompts(params: {
             oninput={oninput}
           />
         );
-      } else if (inputType === 'eth') {
+      } else if (inputType === "eth") {
         return (
           <input
             type="number"
@@ -194,8 +195,8 @@ function renderPrompts(params: {
           />
         );
 
-      // TODO: Support more bytes/int/uint types
-      } else if (inputType === 'bytes32') {
+        // TODO: Support more bytes/int/uint types
+      } else if (inputType === "bytes32") {
         return (
           <input
             type="text"
@@ -205,7 +206,7 @@ function renderPrompts(params: {
             oninput={oninput}
           />
         );
-      } else if (inputType === 'text') {
+      } else if (inputType === "text") {
         return (
           <textarea
             disabled={disabled}
@@ -213,24 +214,22 @@ function renderPrompts(params: {
             oninput={oninput}
           ></textarea>
         );
+      } else {
+        console.warn(`[prompt/input/unrecognized-type]`, type, inputType, args);
+        return (
+          <div class={className}>
+            Unrecognized input type: {type}({inputType}, ...)
+          </div>
+        );
       }
-      else {
-        console.warn(`[prompt/input/unrecognized-type]`, type, inputType, args)
-        return <div class={className}>
-          Unrecognized input type: {type}({inputType}, ...)
-        </div>;
-      }
-
     } else if (type === "debug") {
       console.log(`[prompt/debug]`, ...args);
       return null;
     } else {
-      console.warn(`[prompt/unrecognized-type]`, type, args)
-      return <div class={className}>
-        Unrecognized type: {type}
-      </div>;
+      console.warn(`[prompt/unrecognized-type]`, type, args);
+      return <div class={className}>Unrecognized type: {type}</div>;
     }
-  })
+  });
 }
 
 function makePromptHistory() {
@@ -255,7 +254,7 @@ function makePromptHistory() {
       flow = _flow;
       history.push(await flow.getPrompts());
       api.log();
-      running = false
+      running = false;
     },
     async execute(action: Prompt[]) {
       console.log("execute>", action);
@@ -274,9 +273,8 @@ function makePromptHistory() {
             console.log(`[effect/unrecognized-type]`, effectType, effectArgs);
           }
         }
-      }
-      catch(executeError) {
-        console.log('execute error>', executeError);
+      } catch (executeError) {
+        console.log("execute error>", executeError);
         running = false;
         m.redraw();
         return;
@@ -297,10 +295,10 @@ function makePromptHistory() {
     // TODO: Debounce
     async handleInput(name: any, inputValue: any) {
       const accepted = await flow.handleInput(name, inputValue);
-      if (!accepted) return
+      if (!accepted) return;
 
       // TODO: Write ui queue system to properly update browser input value
-      console.log("acceptedValue", accepted.value)
+      console.log("acceptedValue", accepted.value);
 
       // Grab new prompts first so we can change array atomically
       const newPrompts = await flow.getPrompts();

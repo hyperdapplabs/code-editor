@@ -6,21 +6,22 @@ import { FlowPage } from "./routes/flow-page";
 
 const NotFound = {
   view() {
-    return m('.w-screen.h-screen.flex.items-center.justify-center',
-      m('h1', 'Page not found')
-    )
-  }
-}
+    return m(
+      ".w-screen.h-screen.flex.items-center.justify-center",
+      m("h1", "Page not found")
+    );
+  },
+};
 
 // Remove !# and treat full url as routes
-m.route.prefix = ''
+m.route.prefix = "";
 
 // TODO: Consider code splitting
 //       https://mithril.js.org/route.html#code-splitting
-m.route(document.querySelector<HTMLDivElement>("#app")!, '/404', {
-  '/': EditorIde,
-  '/source/:cid': EditorIde,
-  '/flow/:cid': FlowPage,
+m.route(document.querySelector<HTMLDivElement>("#app")!, "/404", {
+  "/": EditorIde,
+  "/source/:cid": EditorIde,
+  "/flow/:cid": FlowPage,
 
-  '/404': NotFound,
-})
+  "/404": NotFound,
+});

@@ -82,9 +82,10 @@ type AdapterParams = {
  *
  */
 async function makeWalletConnect({ updateStatus }: AdapterParams) {
-  const walletConnectProvider: WalletConnectProvider = new WalletConnectProviderUmd({
-    infuraId: import.meta.env.VITE_INFURA_ID as string,
-  });
+  const walletConnectProvider: WalletConnectProvider =
+    new WalletConnectProviderUmd({
+      infuraId: import.meta.env.VITE_INFURA_ID as string,
+    });
 
   const wallet: Adapter = {
     type: "WalletConnect",
@@ -165,7 +166,7 @@ async function makeMetamask({ updateStatus }: AdapterParams) {
         "networkChanged",
         function (networkId: number) {
           // Time to reload your interface with the new networkId
-          console.log('Network changed', networkId)
+          console.log("Network changed", networkId);
         }
       );
 
