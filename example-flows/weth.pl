@@ -23,13 +23,11 @@ prompt :-
 
 wrap_eth :-
     get(input/eth, ETH),
-    call_fn(weth, deposit, [value(eth(ETH))], []),
-    text('You swapped ', ETH, ' for WETH successfully!').
+    call_fn(weth, deposit, [value(eth(ETH))], []).
 
 unwrap_eth :-
     get(input/weth, WETH),
-    call_fn(weth, withdraw(WETH), []),
-    text('You swapped ', WETH, ' for ETH successfully!').
+    call_fn(weth, withdraw(WETH), []).
 
 abi(weth, [
     name: string / view,

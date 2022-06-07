@@ -168,9 +168,6 @@ function renderPrompts(params: {
 
       const oninput = (e: any) => {
         let value = e.target.value;
-        if (name === "weth") {
-          value = Number(e.target.value) * 10 ** 18;
-        }
         params.onInput(name, value);
       };
       const disabled = !params.isLatest || params.running;
